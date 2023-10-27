@@ -1,0 +1,74 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+
+# Load your preprocessed dataset
+data = pd.read_csv('preprocessed_data.csv')
+
+# 1. Histogram of a Numerical Variable
+plt.figure(figsize=(8, 4))
+sns.histplot(data['numerical_variable'], kde=True)
+plt.title('Distribution of Numerical Variable')
+plt.xlabel('Value')
+plt.ylabel('Frequency')
+plt.show()
+
+# 2. Bar Chart for Categorical Data
+plt.figure(figsize=(8, 4))
+sns.countplot(data['categorical_variable'])
+plt.title('Count of Categorical Variable')
+plt.xlabel('Category')
+plt.ylabel('Count')
+plt.xticks(rotation=45)
+plt.show()
+
+# 3. Box Plot to Identify Outliers
+plt.figure(figsize=(8, 4))
+sns.boxplot(x=data['target_variable'], y=data['numerical_variable'])
+plt.title('Box Plot of Numerical Variable by Target Variable')
+plt.xlabel('Target Variable')
+plt.ylabel('Numerical Variable')
+plt.show()
+
+# 4. Pairplot for Correlations
+sns.pairplot(data)
+plt.show()
+
+# 5. Scatter Plot with Regression Line
+sns.lmplot(x='numerical_variable_1', y='numerical_variable_2', data=data)
+plt.title('Scatter Plot with Regression Line')
+plt.show()
+
+# 6. Heatmap for Correlation Matrix
+correlation_matrix = data.corr()
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm')
+plt.title('Correlation Matrix Heatmap')
+plt.show()
+
+# 7. Bar Chart with Plotly Express
+fig = px.bar(data, x='categorical_variable', y='numerical_variable', color='target_variable')
+fig.update_layout(title='Bar Chart with Plotly Express', xaxis_title='Category', yaxis_title='Value')
+fig.show()
+
+# 8. Line Plot with Plotly Express
+fig = px.line(data, x='date', y='numerical_variable', color='target_variable')
+fig.update_layout(title='Line Plot with Plotly Express', xaxis_title='Date', yaxis_title='Value')
+fig.show()
+
+# 9. Pie Chart with Plotly Express
+fig = px.pie(data, names='categorical_variable', title='Pie Chart with Plotly Express')
+fig.show()
+
+# 10. Violin Plot
+sns.violinplot(x='categorical_variable', y='numerical_variable', data=data)
+plt.title('Violin Plot of Numerical Variable by Category')
+plt.xlabel('Category')
+plt.ylabel('Numerical Variable')
+plt.xticks(rotation=45)
+plt.show()
+
+
+
+
+
