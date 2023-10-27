@@ -1,0 +1,44 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
+
+# Load your preprocessed dataset
+data = pd.read_csv('preprocessed_data.csv')
+
+# Split the data into features (X) and the target variable (y)
+X = data.drop('target_variable', axis=1)
+y = data['target_variable']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardize features
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Initialize and train multiple machine learning models
+models = {
+    'Logistic Regression': LogisticRegression(),
+    'Decision Tree': DecisionTreeClassifier(),
+    'Random Forest': RandomForestClassifier(),
+    'Support Vector Machine': SVC(),
+    'K-Nearest Neighbors': KNeighborsClassifier()
+}
+
+results = {}
+for model_name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    results[model_name] = accuracy
+
+# Compare the accuracy of different models
+for model_name, accuracy in results.items():
+    print(f'{model_name}: Accuracy = {accuracy:.2f}')
